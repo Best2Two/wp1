@@ -383,6 +383,9 @@ export default {
     await this.loadUserEmail();
     this.ready = true;
   },
+  beforeDestroy: function () {
+    this.stopProgressPolling();
+  },
   methods: {
     loadUserEmail: async function () {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/oauth/email`, {

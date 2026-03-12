@@ -249,6 +249,24 @@ export default {
         this.stopProgressPolling();
       }
     },
+    getZimStatus: async function () {
+      for (const item of this.list) {
+        if (this.hasPendingZim(item)) {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/builders/${item.id}/zim/status`,
+            {
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            item.z_status = data.status;
+            item.z_url = data.z_url;
+          }
+        }
+      }
+    },
     editPathFor: (item) => {
       const fragments = item.model.split('.');
       const modelFragment = fragments[fragments.length - 1];
@@ -261,7 +279,10 @@ export default {
       if (this.pollId) {
         return;
       }
-      this.pollId = setInterval(() => this.getLists(), pollTimeoutMs);
+      this.pollId = setInterval(() => {
+        this.getLists();
+        this.getZimStatus();
+      }, pollTimeoutMs);
     },
     stopProgressPolling: function () {
       clearInterval(this.pollId);
