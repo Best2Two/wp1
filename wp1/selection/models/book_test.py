@@ -149,12 +149,10 @@ class BookBuilderTest(BaseWpOneDbTest):
             )
 
     def test_validate_missing_url(self):
-        actual = self.builder.validate(
-            "text/tab-separated-values", project="en.wikipedia.fake"
-        )
+        actual = self.builder.validate(project="en.wikipedia.fake")
         self.assertEqual(("", "", ["Missing URL parameter"]), actual)
 
-    def test_validate_missing_url(self):
+    def test_validate_missing_project(self):
         actual = self.builder.validate(
             url="https://en.wikipedia.fake/wiki/User:Audiodude/Books/test",
         )
