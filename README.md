@@ -70,7 +70,7 @@ interfaces with. They are used for unit testing.
 
 ## Installation
 
-This code is targeted to and tested on Python 3.12.0. For now, all development
+This code is targeted to and tested on Python 3.14. For now, all development
 has been on Linux, use other platforms at your own risk.
 
 ### Installing dependencies
